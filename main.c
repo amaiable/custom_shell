@@ -21,6 +21,7 @@ bool shell_mkdir(char** args);
 
 int main(int argc, char** argv) {
     
+    printf("Welcome to the mai shell\n");
     run_shell();
 
     return 0;
@@ -107,9 +108,15 @@ bool start_process(char** cmd_args) {
     pid_t pid, wpid;
     int to_continue;
 
+    char* argv[] = {"/bin/ls", "-1", NULL};
+
     pid = fork();
     if (pid == 0) {
-        perror("pid == 0");
+
+        int val = execve(cmd_args[0], argv, NULL);
+        if (val == -1) {
+            perror("pid == 0");
+        }
     }
     else if (pid < 0) {
         perror("pid < 0");
